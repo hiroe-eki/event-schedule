@@ -119,7 +119,13 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
-        //
+        // idの値でイベントを検索して取得
+        $event = Event::findOrFail($id);
+
+        // メッセージ編集ビューでそれを表示
+        return view('events.edit', [
+            'event' => $event,
+        ]);
     }
 
     /**
@@ -131,7 +137,15 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // idの値でメッセージを検索して取得
+        $event = Event::findOrFail($id);
+        // メッセージを更新
+        $event->name = $request->name;
+        $event->caption = $request->caption;
+        $event->save();
+
+        // 完了ページへリダイレクトさせる
+        return redirect()->route('events.complete', ['id' => $event->id]);
     }
 
     /**

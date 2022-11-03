@@ -17,10 +17,11 @@
             </div>
             
         </div>
+    </div>
+    {{-- 日程入力ページへのリンク --}}
         
-        {{-- 日程入力ページへのリンク --}}
-        
-        {{-- イベント設定編集ページへのリンク --}}
-        
+    {{-- イベント設定編集ページへのリンク --}}
+    <div class="mt-4 text-center">
+        {!! link_to_route('events.edit', '設定変更', ['id' => $event->id], ['class' => 'btn btn-success btn-lg w-50']) !!}
     </div>
 @endsection

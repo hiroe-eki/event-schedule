@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Schedule; //ここを記述
+use App\Guest; //ここを記述
 
 class Event extends Model
 {
@@ -15,8 +16,13 @@ class Event extends Model
     ];
     
     //子DBを使うための記述
-    public static function schedules()
+    public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+    
+    public function guests()
+    {
+        return $this->hasMany(Guest::class);
     }
 }

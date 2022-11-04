@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Event;  //ここを追加
 use App\Schedule;  //ここを追加
+use App\Guest;  //ここを追加
+use App\GuestSchedules;  //ここを追加
 use Illuminate\Support\Facades\DB;  //ここを追加
 
 class EventsController extends Controller
@@ -92,9 +94,25 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
-        //
+        //tokenの値でidを検索
+        $event = Event::where('token', $token)->first();
+        $id = $event->id;
+        
+        // idの値でイベントを検索して取得
+        $event = Event::findOrFail($id);
+        
+        // 親に紐づいたschedules・guestsのテーブルを取得
+        $schedules = Event::findOrFail($id)->schedules;
+        $guests = Event::findOrFail($id)->guests;
+        
+        // メッセージ詳細ビューでそれを表示
+        return view('events.show', [
+            'event' => $event,
+            'schedules' => $schedules,
+            'guests' => $guests,
+        ]);
     }
     
     public function complete($id)
@@ -103,12 +121,12 @@ class EventsController extends Controller
         $event = Event::findOrFail($id);
         
         // 親に紐づいたscheduleのテーブルを取得
-        //$schedules= Event::find($id)->schedules;
+        $schedules = Event::findOrFail($id)->schedules;
         
          // 完了画面でそれを表示
         return view('events.complete', [
             'event' => $event,
-            //compact('schedules'),
+            'schedules' => $schedules,
         ]);
     }
     /**

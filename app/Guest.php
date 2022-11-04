@@ -5,12 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Event; //ここを記述
 
-class Schedule extends Model
+class Guest extends Model
 {
     protected $fillable = [
         'id',
         'event_id',
-        'schedule',
+        'name',
+        'comment',
     ];
     
     //親DBを使うための記述

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// CRUD
+// イベント関連
 // create: 新規作成用のフォームページ
 Route::get('/events/create', 'EventsController@create')->name('events.create');
 
@@ -31,3 +31,17 @@ Route::get('/events/{id}/edit', 'EventsController@edit')->name('events.edit');
 // イベントの更新処理（編集画面を表示するためのものではありません）
 Route::put('/events/{id}', 'EventsController@update')->name('events.update');
 
+// show:日程追加用のフォームページ表示
+Route::get('/events/{token}/show', 'EventsController@show')->name('events.show');
+
+// show:ゲストを追加
+Route::post('/guests/store', 'GuestsController@store')->name('guests.store');
+
+// store:ゲストスケジュールの追加もしくはそのまま進む
+Route::post('/guest_schedules/store', 'GuestSchedulesController@store')->name('guest_schedules.store');
+
+//ゲストコメント・ゲストスケジュールの更新ページへ遷移
+Route::get('/guest_schedules/edit', 'GuestSchedulesController@edit')->name('guest_schedules.edit');
+
+//ゲストコメント・ゲストスケジュールの更新
+Route::put('/guest_schedules/update', 'GuestSchedulesController@update')->name('guest_schedules.update');

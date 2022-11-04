@@ -155,6 +155,11 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // バリデーション
+        $request->validate([
+            'name'       => 'required',
+        ]);
+        
         // idの値でイベントを検索して取得
         $event = Event::findOrFail($id);
         // イベントを更新

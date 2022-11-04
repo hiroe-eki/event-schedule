@@ -52,9 +52,13 @@ class GuestsController extends Controller
         $guest->comment = '';
         $guest->save();
         
-        return redirect()->route('guest_schedules.edit');
+        //イベントからトークンを調べる
+        //idの値でtokenを検索
+        $event = Event::where('id', $request->event_id)->first();
+        $token = $event->token;
         
-        
+        //ゲストスケジュール作成に遷移
+        return redirect()->route('guest_schedules.store', ['token' => $token , 'guest_id' => $guest->id]);
     }
 
     /**
@@ -88,7 +92,19 @@ class GuestsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // idの値でゲストを検索して取得
+        $guest = Guest::findOrFail($id);
+        // コメントを更新
+        $guest->comment = $request->comment;
+        $guest->save();
+        
+        //イベントIDからトークン検索
+        //idの値でtokenを検索
+        $event = Event::where('id', $guest->event_id)->first();
+        $token = $event->token;
+        
+        // 表示ページへリダイレクトさせる
+        return redirect()->route('events.show', ['token' => $event->token]);
     }
 
     /**

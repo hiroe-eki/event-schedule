@@ -17,16 +17,27 @@
             </div>
             @foreach ($guests as $guest)
                 <div class="col col-auto border">
-                    <p class="font-weight-bold">{{ $guest->name }}</p>
+                    <p class="font-weight-bold">
+                        {!! link_to_route('guest_schedules.edit', $guest->name, ['token' => $event->token,'guest_id'=> $guest->id], ['class' => 'btn  btn-link p-0']) !!}
+                    </p>
                     @foreach ($schedules as $schedule)
-                        <div class="font-weight-bold border-top">○</div>
+                        @php
+                            $prefferrd = $schedule->get_preferred($guest->id);
+                        @endphp
+                        @if($prefferrd == "○")
+                            <div class="font-weight-bold border-top text-success">{{ $prefferrd }}</div>
+                        @elseif($prefferrd == "×")
+                            <div class="font-weight-bold border-top text-danger">{{ $prefferrd }}</div>
+                        @elseif($prefferrd == "△")
+                            <div class="font-weight-bold border-top text-warning">{{ $prefferrd }}</div>
+                        @endif
                     @endforeach
                 </div>
             @endforeach
         </div>
         <div class="mx-auto w-50 mt-3">
             @foreach ($guests as $guest)
-                {{ $guest->name }}　{{ $guest->commnent }}<br>
+                {{ $guest->name }}　{{ $guest->comment }}<br>
             @endforeach
         </div>
     </div>

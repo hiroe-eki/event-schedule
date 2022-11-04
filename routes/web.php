@@ -38,10 +38,13 @@ Route::get('/events/{token}/show', 'EventsController@show')->name('events.show')
 Route::post('/guests/store', 'GuestsController@store')->name('guests.store');
 
 // store:ゲストスケジュールの追加もしくはそのまま進む
-Route::post('/guest_schedules/store', 'GuestSchedulesController@store')->name('guest_schedules.store');
+Route::get('/guest_schedules/{token}/{guest_id}/store', 'GuestSchedulesController@store')->name('guest_schedules.store');
 
 //ゲストコメント・ゲストスケジュールの更新ページへ遷移
-Route::get('/guest_schedules/edit', 'GuestSchedulesController@edit')->name('guest_schedules.edit');
+Route::get('/guest_schedules/{token}/{guest_id}/edit', 'GuestSchedulesController@edit')->name('guest_schedules.edit');
 
-//ゲストコメント・ゲストスケジュールの更新
-Route::put('/guest_schedules/update', 'GuestSchedulesController@update')->name('guest_schedules.update');
+//ゲストスケジュールの更新
+Route::post('/guest_schedules/{token}/{guest_id}/{schedule_id}/update', 'GuestSchedulesController@update')->name('guest_schedules.update');
+
+//ゲストコメントの更新
+Route::put('/guest/{guest_id}/update', 'GuestsController@update')->name('guests.update');

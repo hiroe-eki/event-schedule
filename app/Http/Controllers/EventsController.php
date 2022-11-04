@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Event;  //ここを追加
 use App\Schedule;  //ここを追加
 use App\Guest;  //ここを追加
-use App\GuestSchedules;  //ここを追加
+use App\GuestSchedule;  //ここを追加
 use Illuminate\Support\Facades\DB;  //ここを追加
 
 class EventsController extends Controller
@@ -155,9 +155,9 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // idの値でメッセージを検索して取得
+        // idの値でイベントを検索して取得
         $event = Event::findOrFail($id);
-        // メッセージを更新
+        // イベントを更新
         $event->name = $request->name;
         $event->caption = $request->caption;
         $event->save();

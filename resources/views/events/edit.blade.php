@@ -4,7 +4,7 @@
     <div class="text-center">
         <h1>イベント設定変更</h1>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-6">
             {!! Form::model($event, ['route' => ['events.update', $event->id], 'method' => 'put']) !!}
                 @csrf
